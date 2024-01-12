@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import { useSearchParams } from "react-router-dom";
 import Heading from "../Shared/Heading/Heading";
+import Loader from "../Loader/Loader";
 
 
 const Rooms = () => {
@@ -10,9 +11,12 @@ const Rooms = () => {
 
     const [params, setParams] = useSearchParams();
 
+    const [loading, setLoading] = useState(false)
+
     const category = params.get('category'); 
 
     useEffect( () => {
+        setLoading(true)
         fetch('./rooms.json')
         .then(res => res.json())
         .then(data => {
@@ -22,8 +26,15 @@ const Rooms = () => {
             } else{
                 setRooms(data)
             }
+
+            setLoading(false)
         })
+
     } ,[category])
+
+    if(loading) {
+        return <Loader></Loader>
+    }
 
     return (
         <div>
@@ -35,7 +46,7 @@ const Rooms = () => {
              }
          </div> : 
           
-          <div>
+          <div className="mt-16">
             <Heading center={true} title={'No rooms available in this category'} subtitle={'Please select others category'}></Heading>
           </div>
            }

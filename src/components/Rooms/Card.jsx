@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Card = ({room}) => {
 
-   const {image, location, price} = room || {}; 
+   const {image, location, price, _id} = room || {}; 
 
     return (
+      <Link to={`/room/${_id}`}>
       <div className='col-span-1 cursor-pointer group'>
         <div className='flex flex-col gap-2 w-full'>
           <div
@@ -45,6 +48,7 @@ const Card = ({room}) => {
           </div>
         </div>
       </div>
+      </Link>
     )
   }
   
